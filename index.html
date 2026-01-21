@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Мои сайты — Портал</title>
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--accent:#0b63c3;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:var(--bg); color:#111}
+    .wrap{max-width:980px;margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    .controls{display:flex;gap:8px;align-items:center}
+    input[type="search"], input[type="text"], select{padding:8px;border-radius:8px;border:1px solid #e6e9ef}
+    button{background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+    .panel{background:var(--card);padding:14px;border-radius:10px;border:1px solid #eef2f6}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
+    .card{background:#fff;padding:10px;border-radius:10px;border:1px solid #eef2f6;display:flex;flex-direction:column;gap:8px}
+    .thumb{height:110px;border-radius:8px;background:#f3f6fb;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .meta{font-size:13px;color:var(--muted)}
+    .actions{display:flex;gap:6px}
+    .small{padding:6px 8px;font-size:13px}
+    .empty{color:var(--muted);padding:12px}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    .form-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    [draggable]{cursor:grab}
+    @media (max-width:640px){header{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Портал — Мои сайты</h1>
+        <div class="meta">На этой странице — ссылки на все сайты, которые вы создали. Используйте относительные ссылки (например <code>./site1/index.html</code>) или абсолютные URL.</div>
+      </div>
+
+      <div class="controls">
+        <input id="search" type="search" placeholder="Поиск по названию или описанию" aria-label="Поиск">
+        <select id="filterCat" aria-label="Фильтр по категории"><option value="all">Все</option></select>
+        <button id="btnExport">Экспорт</button>
+        <button id="btnImport" class="small">Импорт</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <strong>Добавить/изменить сайт</strong>
+      <div class="form-row" style="margin-top:8px">
+        <input id="title" placeholder="Название (например: Мой проект)" style="flex:1">
+        <input id="url" placeholder="Путь или URL (./site1/index.html)" style="flex:1">
+      </div>
+      <div class="form-row">
+        <input id="category" placeholder="Категория (например: школьные, портфолио)" style="flex:1">
+        <input id="desc" placeholder="Короткое описание" style="flex:2">
+      </div>
+      <div class="form-row">
+        <input id="thumbFile" type="file" accept="image/*">
+        <button id="addBtn">Добавить сайт</button>
+        <button id="clearBtn" class="small">Очистить форму</button>
+      </div>
+      <div class="meta" style="margin-top:8px">Файлы-миниатюры будут сохраняться в localStorage в виде base64. Для публикации на сервере лучше использовать относительные путевые ссылки и хранить миниатюры рядом с сайтом.</div>
+    </section>
+
+    <section style="margin-top:12px">
+      <div id="list" class="grid" aria-live="polite"></div>
+      <div id="empty" class="empty" hidden>Список пуст — добавьте свой первый сайт.</div>
+    </section>
+
+    <footer>
+      <div>Поддерживаемые действия: добавление, правка, удаление, перетаскивание для изменения порядка, экспорт/импорт JSON. Данные хранятся в вашем браузере (localStorage).</div>
+    </footer>
+  </div>
+
+  <script>
+    // State
+    const STORAGE_KEY = 'my_sites_portal_v1';
+    const $ = id => document.getElementById(id);
+    let sites = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || [];
+    let editingId = null;
+
+    // Helpers
+    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(sites)); }
+    function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+    function escapeHtml(s){ return String(s||''); }
+
+    // Render
+    function populateCategories(){
+      const sel = $('filterCat');
+      const cats = Array.from(new Set(sites.map(s=>s.category||'Без категории')));
+      sel.innerHTML = '<option value="all">Все</option>' + cats.map(c=>`<option value=\"${c}\">${c}</option>`).join('');
+    }
+
+    function render(){
+      const container = $('list'); container.innerHTML = '';
+      if(sites.length === 0){ $('empty').hidden = false; return; } else $('empty').hidden = true;
+      const q = $('search').value.trim().toLowerCase();
+      const cat = $('filterCat').value;
+      sites.forEach(site=>{
+        if(q && !(site.title+site.desc+site.category).toLowerCase().includes(q)) return;
+        if(cat !== 'all' && (site.category||'Без категории') !== cat) return;
+
+        const el = document.createElement('div'); el.className='card'; el.draggable = true; el.dataset.id = site.id;
+        el.innerHTML = `
+          <div class=thumb>${site.thumb ? `<img src=\"${site.thumb}\" alt=\"${escapeHtml(site.title)}\">` : '<div class="meta">Нет миниатюры</div>'}</div>
+          <div>
+            <strong><a href="${escapeHtml(site.url)}" target="_blank" rel="noopener">${escapeHtml(site.title)}</a></strong>
+            <div class="meta">${escapeHtml(site.desc||'')}<br>Категория: ${escapeHtml(site.category||'Без категории')}</div>
+          </div>
+          <div class="actions">
+            <button data-action="edit" class="small">Правка</button>
+            <button data-action="delete" class="small">Удалить</button>
+          </div>`;
+
+        // Drag events
+        el.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', site.id); e.currentTarget.style.opacity = '0.6'; });
+        el.addEventListener('dragend', e => { e.currentTarget.style.opacity = ''; });
+        el.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.06)'; });
+        el.addEventListener('dragleave', e => { e.currentTarget.style.boxShadow = ''; });
+        el.addEventListener('drop', e => {
+          e.preventDefault(); e.currentTarget.style.boxShadow = '';
+          const fromId = e.dataTransfer.getData('text/plain');
+          const toId = e.currentTarget.dataset.id;
+          reorder(fromId, toId);
+        });
+
+        // Actions
+        el.querySelectorAll('button').forEach(btn=>btn.addEventListener('click', onCardAction));
+
+        container.appendChild(el);
+      });
+      populateCategories();
+    }
+
+    function onCardAction(e){
+      const card = e.target.closest('[data-id]');
+      const id = card.dataset.id; const action = e.target.dataset.action;
+      if(action === 'delete'){
+        if(!confirm('Удалить сайт?')) return;
+        sites = sites.filter(s=>s.id !== id); save(); render();
+      } else if(action === 'edit'){
+        const s = sites.find(x=>x.id===id); if(!s) return;
+        $('title').value = s.title; $('url').value = s.url; $('category').value = s.category || ''; $('desc').value = s.desc || '';
+        editingId = id; $('addBtn').textContent = 'Сохранить изменения';
+      }
+    }
+
+    function reorder(fromId, toId){
+      if(fromId === toId) return;
+      const fromIndex = sites.findIndex(s=>s.id===fromId);
+      const toIndex = sites.findIndex(s=>s.id===toId);
+      if(fromIndex < 0 || toIndex < 0) return;
+      const [item] = sites.splice(fromIndex,1);
+      sites.splice(toIndex,0,item);
+      save(); render();
+    }
+
+    // Add / Save
+    $('addBtn').addEventListener('click', async ()=>{
+      const title = $('title').value.trim(); const url = $('url').value.trim(); const category = $('category').value.trim(); const desc = $('desc').value.trim();
+      if(!title || !url){ alert('Нужно указать название и путь/URL.'); return; }
+      let thumb = null;
+      const fileInput = $('thumbFile');
+      if(fileInput.files && fileInput.files[0]){
+        thumb = await fileToBase64(fileInput.files[0]);
+      }
+      if(editingId){
+        const s = sites.find(x=>x.id===editingId);
+        s.title = title; s.url = url; s.category = category; s.desc = desc; if(thumb) s.thumb = thumb; save(); editingId = null; $('addBtn').textContent = 'Добавить сайт';
+      } else {
+        sites.push({id: uid(), title, url, category, desc, thumb});
+      }
+      save(); clearForm(); render();
+    });
+
+    $('clearBtn').addEventListener('click', ()=>{ clearForm(); editingId = null; $('addBtn').textContent = 'Добавить сайт'; });
+
+    function clearForm(){ ['title','url','category','desc'].forEach(id=>$(id).value=''); $('thumbFile').value = ''; }
+
+    function fileToBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(); r.readAsDataURL(file); }); }
+
+    // Export / Import
+    $('btnExport').addEventListener('click', ()=>{
+      const data = JSON.stringify(sites, null, 2);
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'my_sites.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    $('btnImport').addEventListener('click', ()=>{
+      const input = document.createElement('input'); input.type='file'; input.accept='application/json';
+      input.addEventListener('change', e=>{
+        const f = input.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => {
+          try{ const imported = JSON.parse(ev.target.result); if(!Array.isArray(imported)) throw new Error('Неверный формат'); sites = imported; save(); render(); alert('Импорт завершён'); } catch(err){ alert('Ошибка при импорте: ' + err.message); }
+        }; r.readAsText(f);
+      });
+      input.click();
+    });
+
+    // Filters
+    $('search').addEventListener('input', render);
+    $('filterCat').addEventListener('change', render);
+
+    // Init
+    render();
+
+    // Expose for debugging
+    window.__MY_SITES = {get:()=>sites, save, clear:()=>{sites=[]; save(); render();}};
+  </script>
+</body>
+</html>

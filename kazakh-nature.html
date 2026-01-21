@@ -1,0 +1,844 @@
+
+​<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қазақстанның қорғалатын табиғи аумақтары</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 35px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            font-size: 2em;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            text-align: center;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: zoomIn 0.6s ease-out backwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+
+        .card-content {
+            padding: 30px;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .badge.year {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .badge.area {
+            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+        }
+
+        .badge.location {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.05em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        footer p {
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+            font-size: 80px;
+        }
+
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape">🏔️</div>
+        <div class="shape">🌲</div>
+        <div class="shape">🦅</div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🏔️ Қазақстанның қорғалатын табиғи аумақтары</h1>
+            <p class="subtitle">Табиғатты қорғау • Биоалуантүрлілікті сақтау • Ұрпақ үшін мұра</p>
+        </header>
+
+        <div class="content">
+            <!-- ҚОРЫҚТАР -->
+            <div class="section">
+                <h2 class="section-title">🦅 Мемлекеттік табиғи қорықтар (5)</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Ақсу-Жабағылы">
+                        </div>
+                        <div class="card-content">
+                            <h3>Ақсу-Жабағылы қорығы</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1926 жыл</span>
+                                <span class="badge area">131,9 мың га</span>
+                                <span class="badge location">Түркістан облысы</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Қазақстандағы алғашқы және ең көне қорық!</span> Талас Алатауы мен Өгем жотасында орналасқан. <strong>ЮНЕСКО-ның биосфералық қорығы</strong> мәртебесіне ие.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                🌿 <strong>Өсімдіктер:</strong> 1404 түрі, Грэйг қызғалдағы<br>
+                                🦅 <strong>Құстар:</strong> 239 түрі<br>
+                                🐻 <strong>Сүтқоректілер:</strong> 51 түрі (барыс, аю, марал)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800" alt="Алматы қорығы">
+                        </div>
+                        <div class="card-content">
+                            <h3>Алматы қорығы</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1931 жыл</span>
+                                <span class="badge area">71,7 мың га</span>
+                                <span class="badge location">Алматы облысы</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Іле Алатауының орталық бөлігі</span> - мәңгі қар мен мұз жамылған, ағашқа бай аймақ. Табиғи әсемдікпен ерекшеленеді.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                🌸 <strong>Өсімдіктер:</strong> 1300+ түрі<br>
+                                🐆 <strong>Жануарлар:</strong> барыс, қоңыр аю, марал, таутеке<br>
+                                ⛰️ <strong>Биіктік:</strong> 1600-4500 метр
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Naurzum_nature_reserve.JPG/1024px-Naurzum_nature_reserve.JPG" alt="Наурызым">
+                        </div>
+                        <div class="card-content">
+                            <h3>Наурызым қорығы</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1931 жыл</span>
+                                <span class="badge area">191,4 мың га</span>
+                                <span class="badge location">Қостанай облысы</span>
+                            </div>
+                            <p>
+                                <span class="highlight">ЮНЕСКО Бүкіләлемдік мұралар тізімі!</span> Қазақстанның ең оңтүстік массивіндегі қарағай орманы. Сарыарқаның бірегей кешені.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                🌾 <strong>Өсімдіктер:</strong> 961 түрі<br>
+                                🦌 <strong>Сүтқоректілер:</strong> 39 түрі<br>
+                                🦆 <strong>Құстар:</strong> 239 түрі
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D1%8B%D0%B5_%D1%84%D0%BB%D0%B0%D0%BC%D0%B8%D0%BD%D0%B3%D0%BE.jpg/1024px-%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D1%8B%D0%B5_%D1%84%D0%BB%D0%B0%D0%BC%D0%B8%D0%BD%D0%B3%D0%BE.jpg" alt="Қорғалжын">
+                        </div>
+                        <div class="card-content">
+                            <h3>Қорғалжын қорығы</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1968 жыл</span>
+                                <span class="badge area">543,2 мың га</span>
+                                <span class="badge location">Ақмола облысы</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Фламингонің мекені!</span> Су-батпақты ландшафтары бар. <strong>ЮНЕСКО Бүкіләлемдік мұралар тізімінде</strong>. Құстардың 354 түрі.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                🦩 <strong>Қызыл кітап:</strong> фламинго, құтан, ақ тырна<br>
+                                🌷 <strong>Эндемик:</strong> Шренк қызғалдағы<br>
+                                💧 <strong>Көлдер:</strong> Теңіз, Қорғалжын
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Марқакөл">
+                        </div>
+                        <div class="card-content">
+                            <h3>Марқакөл қорығы</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1976 жыл</span>
+                                <span class="badge area">103,0 мың га</span>
+                                <span class="badge location">Шығыс Қазақстан</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Алтайдың маржаны!</span> Күршім жотасы мен Азутау аралығында. Марқакөл көлі - табиғаттың сыйлығы, 44 мың га көл.
+                            </p>
+                            <p style="margin-top: 10px;">
+                                🏔️ <strong>Орналасуы:</strong> Алтай таулары, 1449 м<br>
+                                🐟 <strong>Көл:</strong> 38 км × 19 км<br>
+                                ❄️ <strong>Климат:</strong> 9 ай қар жауады
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ҰЛТТЫҚ САЯБАҚТАР -->
+            <div class="section">
+                <h2 class="section-title">🏕️ Мемлекеттік ұлттық табиғи саябақтар (5)</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1508164785388-c1be0989f380?w=800" alt="Баянауыл">
+                        </div>
+                        <div class="card-content">
+                            <h3>Баянауыл ұлттық паркі</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1985 жыл</span>
+                                <span class="badge area">68 мың га</span>
+                                <span class="badge location">Павлодар облысы</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Қазақстандағы алғашқы ұлттық парк.</span> Баянауыл тауларынан Сарыарқа жазығына дейін созылған. Жасыбай, Сабындыкөл, Торайғыр көлдері орналасқан.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800" alt="Алтын-Емел">
+                        </div>
+                        <div class="card-content">
+                            <h3>Алтын-Емел ұлттық паркі</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1996 жыл</span>
+                                <span class="badge area">520 мың га</span>
+                                <span class="badge location">Алматы облысы</span>
+                            </div>
+                            <p>
+                                Жетісу Алатауында орналасқан. <strong>"Әнші тау"</strong>, петроглифтер, өсімдіктің 1500 түрі, құстардың 200 түрі. Жәндіктердің 5000+ түрі.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Іле-Алатауы">
+                        </div>
+                        <div class="card-content">
+                            <h3>Іле-Алатауы ұлттық паркі</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1996 жыл</span>
+                                <span class="badge area">200 мың га</span>
+                                <span class="badge location">Алматы облысы</span>
+                            </div>
+                            <p>
+                                Алматы қаласымен іргелес. Конституция шыңы (4540 м), Дмитриев мұздығы (17 км²). Түрген, Есік, Талғар өзендері.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Көкшетау">
+                        </div>
+                        <div class="card-content">
+                            <h3>Көкшетау ұлттық паркі</h3>
+                            <div class="card-meta">
+                                <span class="badge year">1996 жыл</span>
+                                <span class="badge area">151,1 мың га</span>
+                                <span class="badge location">Ақмола облысы</span>
+                            </div>
+                            <p>
+                                Солтүстік Қазақстан пен Ақмола түйісінде. Өсімдіктің 700 түрі бар. Ерекше экологиялық, эстетикалық құндылығы.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Катон-Қарағай">
+                        </div>
+                        <div class="card-content">
+                            <h3>Катон-Қарағай ұлттық паркі</h3>
+                            <div class="card-meta">
+                                <span class="badge year">2001 жыл</span>
+                                <span class="badge area">643 мың га</span>
+                                <span class="badge location">Шығыс Қазақстан</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Ең ірі ұлттық парк!</span> Алтай өңірінде. Құстардың 260 түрі, 24 тарихи, 11 табиғи ескерткіш.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ҚОРЫҚШАЛАР -->
+            <div class="section">
+                <h2 class="section-title">🌿 Мемлекеттік табиғи қорықшалар (5)</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800" alt="Балқаш">
+                        </div>
+                        <div class="card-content">
+                            <h3>Балқаш маңы қорықшасы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Қарағанды облысы</span>
+                            </div>
+                            <p>Балқаш көлінің жағалауында. Көл маңындағы бірегей экожүйелерді қорғайды. Суда жүзетін құстардың тоқтау орны.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Рахман">
+                        </div>
+                        <div class="card-content">
+                            <h3>Рахман қайнарлары қорықшасы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Шығыс Қазақстан</span>
+                            </div>
+                            <p>Термалдық қайнарлары бар бірегей кешен. Дәрілік қасиеті бар минералды сулар.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Төменгі-Тұрғысын">
+                        </div>
+                        <div class="card-content">
+                            <h3>Төменгі-Тұрғысын қорықшасы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Шығыс Қазақстан</span>
+                            </div>
+                            <p>Республикалық маңызы бар қорықша. Төменгі Тұрғысын өзені алқабында орналасқан.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800" alt="Қаратал">
+                        </div>
+                        <div class="card-content">
+                            <h3>Қаратал құмдары қорықшасы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Шығыс Қазақстан</span>
+                            </div>
+                            <p>Құмды ландшафтыларды қорғау. Қаратал өзені маңындағы бірегей құмды аймақтар.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1508164785388-c1be0989f380?w=800" alt="Кулуджун">
+                        </div>
+                        <div class="card-content">
+                            <h3>Кулуджун қорықшасы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Шығыс Қазақстан</span>
+                                <span class="badge">Зоологиялық</span>
+                            </div>
+                            <p>Зоологиялық қорықша. Жабайы жануарларды қорғау. 2018 жылы Тарбағатай қорығына қосылды.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- РЕЗЕРВАТТАР -->
+            <div class="section">
+                <h2 class="section-title">🌲 Мемлекеттік табиғи резерваттар (5)</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Семей">
+                        </div>
+                        <div class="card-content">
+                            <h3>Семей орманы резерваты</h3>
+                            <div class="card-meta">
+                                <span class="badge year">2003 жыл</span>
+                                <span class="badge area">700+ мың га</span>
+                                <span class="badge location">Шығыс Қазақстан</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Ең ірі орман резерваты!</span> Ертіс өңірінің жалқарағай ормандарын сақтау. Балықтың 25 түрі, құстардың көп түрлері.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Ертіс">
+                        </div>
+                        <div class="card-content">
+                            <h3>Ертіс орманы резерваты</h3>
+                            <div class="card-meta">
+                                <span class="badge year">2003 жыл</span>
+                                <span class="badge area">278 мың га</span>
+                                <span class="badge location">Абай/Павлодар</span>
+                            </div>
+                            <p>Бесқарағай және Шалдай ормандарын біріктіру. Құстардың 43 түрі: бүркіт, безгелдек, үкі.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800" alt="Ырғыз-Торғай">
+                        </div>
+                        <div class="card-content">
+                            <h3>Ырғыз-Торғай резерваты</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Ақтөбе/Қостанай</span>
+                                <span class="badge area">500+ мың га</span>
+                            </div>
+                            <p>Ырғыз және Торғай өзендері. Су-батпақты экожүйелер. Құстардың көшу жолы.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800" alt="Ақжайық">
+                        </div>
+                        <div class="card-content">
+                            <h3>Ақжайық резерваты</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Батыс Қазақстан</span>
+                            </div>
+                            <p>Жайық өзенінің сағасы. Каспий жағалауындағы бірегей экожүйелер. Балық ресурстарын сақтау.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1508164785388-c1be0989f380?w=800" alt="Алтын дала">
+                        </div>
+                        <div class="card-content">
+                            <h3>Алтын дала резерваты</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Орталық Қазақстан</span>
+                            </div>
+                            <p>Дала экожүйелерін қорғау. Сарыарқаның бірегей ландшафтары мен биоалуантүрлілігі.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ТАБИҒАТ ЕСКЕРТКІШТЕРІ -->
+            <div class="section">
+                <h2 class="section-title">💎 Мемлекеттік табиғат ескерткіштері (5)</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800" alt="Әнші тау">
+                        </div>
+                        <div class="card-content">
+                            <h3>Әнші тау (Ән айтқыш құм)</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Алматы облысы</span>
+                            </div>
+                            <p>
+                                <span class="highlight">Бірегей акустикалық құбылыс!</span> Іле өзені жазығында 150 м төбе. Құмдық "ән айтады". Алтын-Емел паркінде.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Шарын">
+                        </div>
+                        <div class="card-content">
+                            <h3>Шарын шаған тоғайы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Алматы облысы</span>
+                            </div>
+                            <p>Реликті шетен тоғайы. <strong>4,5-5 млн жылдық</strong> тарихы. Өсімдіктің 1500 түрі, құстардың 103 түрі.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800" alt="Шынтүрген">
+                        </div>
+                        <div class="card-content">
+                            <h3>Шынтүрген шыршалары</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Алматы облысы</span>
+                            </div>
+                            <p>Іле Алатауындағы Шренк шыршасының бірегей тоғайлары. Таулы экожүйенің маңызды компоненті.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" alt="Баум">
+                        </div>
+                        <div class="card-content">
+                            <h3>Баум тоғайы</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Алматы қаласы</span>
+                            </div>
+                            <p>Алматы орталығындағы қорғалатын аймақ. Қалалық экожүйенің маңызды бөлігі.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800" alt="Қаз қонақ">
+                        </div>
+                        <div class="card-content">
+                            <h3>Қаз қонақ</h3>
+                            <div class="card-meta">
+                                <span class="badge location">Павлодар облысы</span>
+                            </div>
+                            <p>Ертіс өзенінің жағалауында. Суда жүзетін құстардың көшу жолындағы маңызды тоқтау орны.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p style="font-size: 1.3em; margin-bottom: 20px;">🌍 Қазақстан Республикасының экология, геология және табиғи ресурстар министрлігі</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">10</span>
+                    <span class="stat-label">Мемлекеттік қорық</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">Ұлттық парк</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">49+</span>
+                    <span class="stat-label">Қорықша</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Резерват</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">26+</span>
+                    <span class="stat-label">Табиғат ескерткіші</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 0.95em; opacity: 0.9;">
+                💚 Табиғатты қорғау - болашағымызды қорғау!
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
