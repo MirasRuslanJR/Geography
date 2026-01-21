@@ -3,209 +3,440 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Мои сайты — Портал</title>
+  <title>m1ko websites</title>
   <style>
-    :root{--bg:#f6f7fb;--card:#fff;--accent:#0b63c3;--muted:#6b7280}
-    *{box-sizing:border-box}
-    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:var(--bg); color:#111}
-    .wrap{max-width:980px;margin:28px auto;padding:20px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-    h1{font-size:20px;margin:0}
-    .controls{display:flex;gap:8px;align-items:center}
-    input[type="search"], input[type="text"], select{padding:8px;border-radius:8px;border:1px solid #e6e9ef}
-    button{background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
-    .panel{background:var(--card);padding:14px;border-radius:10px;border:1px solid #eef2f6}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
-    .card{background:#fff;padding:10px;border-radius:10px;border:1px solid #eef2f6;display:flex;flex-direction:column;gap:8px}
-    .thumb{height:110px;border-radius:8px;background:#f3f6fb;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .thumb img{width:100%;height:100%;object-fit:cover}
-    .meta{font-size:13px;color:var(--muted)}
-    .actions{display:flex;gap:6px}
-    .small{padding:6px 8px;font-size:13px}
-    .empty{color:var(--muted);padding:12px}
-    footer{margin-top:14px;color:var(--muted);font-size:13px}
-    .form-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    [draggable]{cursor:grab}
-    @media (max-width:640px){header{flex-direction:column;align-items:flex-start}}
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+    
+    :root {
+      --bg: #0a0e1a;
+      --surface: #141825;
+      --primary: #6366f1;
+      --secondary: #8b5cf6;
+      --accent: #ec4899;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    /* Animated gradient background */
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+      animation: gradientShift 15s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
+    }
+    
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: rgba(99, 102, 241, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    
+    /* Header with glassmorphism */
+    header {
+      text-align: center;
+      margin-bottom: 80px;
+      position: relative;
+    }
+    
+    .logo-container {
+      display: inline-flex;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+      animation: logoFloat 3s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: logoShine 3s infinite;
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+    
+    @keyframes logoShine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    
+    .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    /* Cards grid with stagger animation */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 60px;
+    }
+    
+    .card {
+      position: relative;
+      background: rgba(20, 24, 37, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      border-radius: 24px;
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      opacity: 0;
+      animation: cardFadeIn 0.6s ease forwards;
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+    }
+    
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      display: block;
+      animation: iconBounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes iconBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    }
+    
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .btn-arrow {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    
+    .btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid rgba(99, 102, 241, 0.1);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 40px 20px;
+      }
+      
+      header {
+        margin-bottom: 60px;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+    
+    /* Scroll reveal effect */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="bg-gradient"></div>
+  
+  <div class="container">
     <header>
-      <div>
-        <h1>Портал — Мои сайты</h1>
-        <div class="meta">На этой странице — ссылки на все сайты, которые вы создали. Используйте относительные ссылки (например <code>./site1/index.html</code>) или абсолютные URL.</div>
+      <div class="logo-container">
+        <div class="logo">MS</div>
       </div>
-
-      <div class="controls">
-        <input id="search" type="search" placeholder="Поиск по названию или описанию" aria-label="Поиск">
-        <select id="filterCat" aria-label="Фильтр по категории"><option value="all">Все</option></select>
-        <button id="btnExport">Экспорт</button>
-        <button id="btnImport" class="small">Импорт</button>
-      </div>
+      <h1>Мои веб-проекты</h1>
+      <p class="subtitle">Коллекция интерактивных сайтов и приложений. Выберите проект для просмотра.</p>
     </header>
-
-    <section class="panel">
-      <strong>Добавить/изменить сайт</strong>
-      <div class="form-row" style="margin-top:8px">
-        <input id="title" placeholder="Название (например: Мой проект)" style="flex:1">
-        <input id="url" placeholder="Путь или URL (./site1/index.html)" style="flex:1">
+    
+    <section class="grid">
+      <div class="card">
+        <span class="card-icon">🏔️</span>
+        <h2 class="card-title">Қазақстанның қорғалатын табиғи аумақтары</h2>
+        <p class="card-desc">Интерактивный гид по охраняемым природным территориям Казахстана с детальной информацией</p>
+        <a href="kazakh-nature.html" class="btn" target="_blank" rel="noopener">
+          <span>Открыть проект</span>
+          <span class="btn-arrow">→</span>
+        </a>
       </div>
-      <div class="form-row">
-        <input id="category" placeholder="Категория (например: школьные, портфолио)" style="flex:1">
-        <input id="desc" placeholder="Короткое описание" style="flex:2">
+      
+      <div class="card">
+        <span class="card-icon">🦦</span>
+        <h2 class="card-title">Құндыз — қысқаша ақпарат</h2>
+        <p class="card-desc">Краткая информация и анализ проблематики, связанной с бобрами в Казахстане</p>
+        <a href="kundyz.html" class="btn" target="_blank" rel="noopener">
+          <span>Открыть проект</span>
+          <span class="btn-arrow">→</span>
+        </a>
       </div>
-      <div class="form-row">
-        <input id="thumbFile" type="file" accept="image/*">
-        <button id="addBtn">Добавить сайт</button>
-        <button id="clearBtn" class="small">Очистить форму</button>
-      </div>
-      <div class="meta" style="margin-top:8px">Файлы-миниатюры будут сохраняться в localStorage в виде base64. Для публикации на сервере лучше использовать относительные путевые ссылки и хранить миниатюры рядом с сайтом.</div>
+      
+      <!-- Добавьте больше карточек по аналогии -->
+      
     </section>
-
-    <section style="margin-top:12px">
-      <div id="list" class="grid" aria-live="polite"></div>
-      <div id="empty" class="empty" hidden>Список пуст — добавьте свой первый сайт.</div>
-    </section>
-
+    
     <footer>
-      <div>Поддерживаемые действия: добавление, правка, удаление, перетаскивание для изменения порядка, экспорт/импорт JSON. Данные хранятся в вашем браузере (localStorage).</div>
+      <p>© 2026 m1ko websites · Создано с использованием современных веб-технологий</p>
     </footer>
   </div>
-
+  
   <script>
-    // State
-    const STORAGE_KEY = 'my_sites_portal_v1';
-    const $ = id => document.getElementById(id);
-    let sites = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || [];
-    let editingId = null;
-
-    // Helpers
-    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(sites)); }
-    function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-    function escapeHtml(s){ return String(s||''); }
-
-    // Render
-    function populateCategories(){
-      const sel = $('filterCat');
-      const cats = Array.from(new Set(sites.map(s=>s.category||'Без категории')));
-      sel.innerHTML = '<option value="all">Все</option>' + cats.map(c=>`<option value=\"${c}\">${c}</option>`).join('');
+    // Create floating particles
+    function createParticles() {
+      const particleCount = 30;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        particle.style.animation = `float ${Math.random() * 10 + 10}s ease-in-out infinite`;
+        document.body.appendChild(particle);
+      }
     }
-
-    function render(){
-      const container = $('list'); container.innerHTML = '';
-      if(sites.length === 0){ $('empty').hidden = false; return; } else $('empty').hidden = true;
-      const q = $('search').value.trim().toLowerCase();
-      const cat = $('filterCat').value;
-      sites.forEach(site=>{
-        if(q && !(site.title+site.desc+site.category).toLowerCase().includes(q)) return;
-        if(cat !== 'all' && (site.category||'Без категории') !== cat) return;
-
-        const el = document.createElement('div'); el.className='card'; el.draggable = true; el.dataset.id = site.id;
-        el.innerHTML = `
-          <div class=thumb>${site.thumb ? `<img src=\"${site.thumb}\" alt=\"${escapeHtml(site.title)}\">` : '<div class="meta">Нет миниатюры</div>'}</div>
-          <div>
-            <strong><a href="${escapeHtml(site.url)}" target="_blank" rel="noopener">${escapeHtml(site.title)}</a></strong>
-            <div class="meta">${escapeHtml(site.desc||'')}<br>Категория: ${escapeHtml(site.category||'Без категории')}</div>
-          </div>
-          <div class="actions">
-            <button data-action="edit" class="small">Правка</button>
-            <button data-action="delete" class="small">Удалить</button>
-          </div>`;
-
-        // Drag events
-        el.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', site.id); e.currentTarget.style.opacity = '0.6'; });
-        el.addEventListener('dragend', e => { e.currentTarget.style.opacity = ''; });
-        el.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; e.currentTarget.style.boxShadow = '0 4px 18px rgba(0,0,0,0.06)'; });
-        el.addEventListener('dragleave', e => { e.currentTarget.style.boxShadow = ''; });
-        el.addEventListener('drop', e => {
-          e.preventDefault(); e.currentTarget.style.boxShadow = '';
-          const fromId = e.dataTransfer.getData('text/plain');
-          const toId = e.currentTarget.dataset.id;
-          reorder(fromId, toId);
-        });
-
-        // Actions
-        el.querySelectorAll('button').forEach(btn=>btn.addEventListener('click', onCardAction));
-
-        container.appendChild(el);
+    
+    // Particle floating animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0%, 100% {
+          transform: translate(0, 0) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+        }
+        50% {
+          transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(1.5);
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.6;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    createParticles();
+    
+    // Scroll reveal animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
       });
-      populateCategories();
-    }
-
-    function onCardAction(e){
-      const card = e.target.closest('[data-id]');
-      const id = card.dataset.id; const action = e.target.dataset.action;
-      if(action === 'delete'){
-        if(!confirm('Удалить сайт?')) return;
-        sites = sites.filter(s=>s.id !== id); save(); render();
-      } else if(action === 'edit'){
-        const s = sites.find(x=>x.id===id); if(!s) return;
-        $('title').value = s.title; $('url').value = s.url; $('category').value = s.category || ''; $('desc').value = s.desc || '';
-        editingId = id; $('addBtn').textContent = 'Сохранить изменения';
-      }
-    }
-
-    function reorder(fromId, toId){
-      if(fromId === toId) return;
-      const fromIndex = sites.findIndex(s=>s.id===fromId);
-      const toIndex = sites.findIndex(s=>s.id===toId);
-      if(fromIndex < 0 || toIndex < 0) return;
-      const [item] = sites.splice(fromIndex,1);
-      sites.splice(toIndex,0,item);
-      save(); render();
-    }
-
-    // Add / Save
-    $('addBtn').addEventListener('click', async ()=>{
-      const title = $('title').value.trim(); const url = $('url').value.trim(); const category = $('category').value.trim(); const desc = $('desc').value.trim();
-      if(!title || !url){ alert('Нужно указать название и путь/URL.'); return; }
-      let thumb = null;
-      const fileInput = $('thumbFile');
-      if(fileInput.files && fileInput.files[0]){
-        thumb = await fileToBase64(fileInput.files[0]);
-      }
-      if(editingId){
-        const s = sites.find(x=>x.id===editingId);
-        s.title = title; s.url = url; s.category = category; s.desc = desc; if(thumb) s.thumb = thumb; save(); editingId = null; $('addBtn').textContent = 'Добавить сайт';
-      } else {
-        sites.push({id: uid(), title, url, category, desc, thumb});
-      }
-      save(); clearForm(); render();
-    });
-
-    $('clearBtn').addEventListener('click', ()=>{ clearForm(); editingId = null; $('addBtn').textContent = 'Добавить сайт'; });
-
-    function clearForm(){ ['title','url','category','desc'].forEach(id=>$(id).value=''); $('thumbFile').value = ''; }
-
-    function fileToBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(); r.readAsDataURL(file); }); }
-
-    // Export / Import
-    $('btnExport').addEventListener('click', ()=>{
-      const data = JSON.stringify(sites, null, 2);
-      const blob = new Blob([data], {type:'application/json'});
-      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'my_sites.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
-
-    $('btnImport').addEventListener('click', ()=>{
-      const input = document.createElement('input'); input.type='file'; input.accept='application/json';
-      input.addEventListener('change', e=>{
-        const f = input.files[0]; if(!f) return; const r = new FileReader(); r.onload = ev => {
-          try{ const imported = JSON.parse(ev.target.result); if(!Array.isArray(imported)) throw new Error('Неверный формат'); sites = imported; save(); render(); alert('Импорт завершён'); } catch(err){ alert('Ошибка при импорте: ' + err.message); }
-        }; r.readAsText(f);
+    }, observerOptions);
+    
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    
+    // Card tilt effect on mouse move
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
       });
-      input.click();
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
     });
-
-    // Filters
-    $('search').addEventListener('input', render);
-    $('filterCat').addEventListener('change', render);
-
-    // Init
-    render();
-
-    // Expose for debugging
-    window.__MY_SITES = {get:()=>sites, save, clear:()=>{sites=[]; save(); render();}};
   </script>
 </body>
 </html>
