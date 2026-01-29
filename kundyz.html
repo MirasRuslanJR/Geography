@@ -4,32 +4,493 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Құндыз туралы қысқаша ақпарат</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#f7fbff;--card:#ffffff;--accent:#2b7a78;--muted:#556066}
-    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:#133741; margin:0; padding:24px}
-    .container{max-width:900px;margin:0 auto}
-    header{display:flex;gap:16px;align-items:center;margin-bottom:20px}
-    header h1{font-size:1.5rem;margin:0}
-    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(19,55,65,0.06);margin-bottom:16px}
-    h2{color:var(--accent);margin-top:0}
-    ul{margin:0 0 12px 20px}
-    .grid{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:880px){.grid{grid-template-columns:1fr 1fr}}
-    .muted{color:var(--muted);font-size:0.95rem}
-    .anchor-list a{display:inline-block;margin-right:8px;padding:6px 10px;background:#eef7f6;border-radius:8px;color:var(--accent);text-decoration:none;font-weight:600}
-    footer{font-size:0.85rem;color:var(--muted);text-align:center;margin-top:18px}
-    .highlight{background:linear-gradient(90deg,#e6fbfa,#eef7f6);padding:8px;border-radius:8px}
-    .section-title{display:flex;justify-content:space-between;align-items:center}
-    code{background:#f3f8f8;padding:2px 6px;border-radius:6px;font-family:monospace}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1a5f5a;
+      --secondary: #2d8b85;
+      --accent: #4ecdc4;
+      --warm: #ff6b6b;
+      --gold: #ffd93d;
+      --dark: #0d2326;
+      --light: #f0f7f4;
+      --white: #ffffff;
+      --shadow: rgba(13, 35, 38, 0.1);
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-beaver: linear-gradient(135deg, #2d8b85 0%, #1a5f5a 100%);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(180deg, #0d2326 0%, #1a3d42 50%, #2d5a5f 100%);
+      color: var(--dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Animated background particles */
+    .bg-decoration {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, rgba(78, 205, 196, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) { width: 80px; height: 80px; top: 10%; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 60px; height: 60px; top: 60%; left: 80%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 100px; height: 100px; top: 80%; left: 20%; animation-delay: 4s; }
+    .particle:nth-child(4) { width: 70px; height: 70px; top: 30%; left: 70%; animation-delay: 6s; }
+    .particle:nth-child(5) { width: 90px; height: 90px; top: 50%; left: 50%; animation-delay: 8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      25% { transform: translate(30px, -30px) scale(1.1); opacity: 0.5; }
+      50% { transform: translate(-20px, 20px) scale(0.9); opacity: 0.4; }
+      75% { transform: translate(20px, 10px) scale(1.05); opacity: 0.6; }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Header */
+    header {
+      text-align: center;
+      padding: 80px 20px 60px;
+      position: relative;
+      margin-bottom: 60px;
+    }
+
+    header::before {
+      content: '🦫';
+      position: absolute;
+      font-size: 150px;
+      opacity: 0.1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #4ecdc4 0%, #ffd93d 50%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(78, 205, 196, 0.3);
+      animation: slideDown 0.8s ease-out;
+      position: relative;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--accent);
+      font-weight: 300;
+      animation: fadeIn 1s ease-out 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      margin-bottom: 50px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: slideUp 0.8s ease-out 0.4s both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    nav a {
+      padding: 12px 28px;
+      background: var(--gradient-beaver);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(45, 139, 133, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    nav a:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    nav a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(45, 139, 133, 0.5);
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: cardAppear 0.6s ease-out both;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.5s; }
+    .card:nth-child(2) { animation-delay: 0.6s; }
+    .card:nth-child(3) { animation-delay: 0.7s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
+    .card:nth-child(5) { animation-delay: 0.9s; }
+
+    @keyframes cardAppear {
+      from { opacity: 0; transform: translateY(50px) rotateX(10deg); }
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover::before {
+      transform: scale(1);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Section styling */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      background: var(--gradient-beaver);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-beaver);
+      border-radius: 2px;
+    }
+
+    h3 {
+      color: var(--secondary);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 25px 0 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3::before {
+      content: '▸';
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 15px;
+      color: #2a3f44;
+    }
+
+    .muted {
+      color: #4a6269;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, rgba(78, 205, 196, 0.15) 0%, rgba(255, 217, 61, 0.15) 100%);
+      padding: 25px;
+      border-radius: 20px;
+      border-left: 5px solid var(--accent);
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight::before {
+      content: '💡';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    @media(min-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .grid > div {
+      background: linear-gradient(135deg, rgba(78, 205, 196, 0.05) 0%, rgba(45, 139, 133, 0.05) 100%);
+      padding: 25px;
+      border-radius: 20px;
+      border: 2px solid rgba(78, 205, 196, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .grid > div:hover {
+      background: linear-gradient(135deg, rgba(78, 205, 196, 0.1) 0%, rgba(45, 139, 133, 0.1) 100%);
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+
+    /* List */
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 20px 0;
+    }
+
+    ul li {
+      padding: 15px 20px;
+      margin: 12px 0;
+      background: linear-gradient(90deg, rgba(78, 205, 196, 0.1) 0%, transparent 100%);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding-left: 50px;
+    }
+
+    ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    ul li:hover {
+      background: linear-gradient(90deg, rgba(78, 205, 196, 0.2) 0%, rgba(78, 205, 196, 0.05) 100%);
+      transform: translateX(10px);
+    }
+
+    strong {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    code {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--white);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--accent);
+      font-size: 1rem;
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 1s ease-out 1s both;
+    }
+
+    /* Number badges for sections */
+    #overview h2::before { content: '01'; }
+    #decline h2::before { content: '02'; }
+    #causes h2::before { content: '03'; }
+    #consequences h2::before { content: '04'; }
+    #solutions h2::before { content: '05'; }
+
+    h2::before {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-beaver);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 50px;
+      font-size: 1.2rem;
+      margin-right: 15px;
+      box-shadow: 0 4px 15px rgba(45, 139, 133, 0.4);
+      flex-shrink: 0;
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--warm) 50%, var(--gold) 100%);
+      z-index: 9999;
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .card {
+        padding: 25px;
+      }
+      
+      nav {
+        padding: 20px;
+      }
+      
+      nav a {
+        font-size: 0.85rem;
+        padding: 10px 20px;
+      }
+    }
+
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Selection color */
+    ::selection {
+      background: var(--accent);
+      color: white;
+    }
   </style>
 </head>
 <body>
+  <!-- Animated background -->
+  <div class="bg-decoration">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Scroll progress indicator -->
+  <div class="scroll-indicator" id="scrollProgress"></div>
+
   <div class="container">
     <header>
       <h1>Құндыз — қысқаша ақпарат және мәселе талдауы</h1>
+      <p class="subtitle">Экологиялық маңызы мен қорғау шаралары</p>
     </header>
 
-    <nav class="card anchor-list" aria-label="Бөлімдер">
+    <nav aria-label="Бөлімдер">
       <a href="#overview">Қысқаша ақпарат</a>
       <a href="#decline">Жойылу мәселесі</a>
       <a href="#causes">Себептер</a>
@@ -40,19 +501,19 @@
     <main>
       <section id="overview" class="card">
         <div class="section-title">
-          <h2>1. Құндыз туралы қысқаша ақпарат</h2>
+          <h2>Құндыз туралы қысқаша ақпарат</h2>
         </div>
         <p class="muted">Құндыз — судың жанында тіршілік ететін ірі кеміргіш жануар. Төменде олардың экологиялық рөлі мен іс-әрекеттерінің қысқаша сипаттамасы берілген.</p>
         <p class="highlight">Құндыз ағаштарды үгіп, өзендер мен көлдерге бөгеттер (дамбалар) соғады. Бұл бөгеттер суды тоқтатып, батпақты жерлер мен кішігірім көлдер пайда болуына әкеледі. Нәтижесінде биологиялық әртүрлілік артып, су сапасы жақсарады және басқа жануар түрлеріне мекен пайда болады.</p>
       </section>
 
       <section id="decline" class="card">
-        <h2>2. Құндыздың жойылуы (таратылуы) мәселесі</h2>
+        <h2>Құндыздың жойылуы (таратылуы) мәселесі</h2>
         <p class="muted">Тарихи кезеңдерде құндыздар көптеген жерлерде саны күрт азайды. Бұл әсіресе Еуропа мен Солтүстік Американың кей өңірлерінде XIX–XX ғасырларда байқалды. Мысалы, Британияда құндызлар жойылып кеткен, алайда соңғы жылдары қайта енгізу жұмыстары жүргізілуде.</p>
       </section>
 
       <section id="causes" class="card">
-        <h2>3. Мәселенің себептері</h2>
+        <h2>Мәселенің себептері</h2>
         <div class="grid">
           <div>
             <h3>(a) Аңшылық, аң терісі үшін аулау</h3>
@@ -76,7 +537,7 @@
       </section>
 
       <section id="consequences" class="card">
-        <h2>4. Мәселенің салдары</h2>
+        <h2>Мәселенің салдары</h2>
         <ul>
           <li><strong>Экологиялық зиян:</strong> Құндыздардың азаюы өзен доғаларындағы биоәртүрліліктің төмендеуіне әкеледі.</li>
           <li><strong>Қоршаған орта теңгерімінің бұзылуы:</strong> Құндыздар — экожүйенің «инженерлері». Олардың қызметі жоғалғанда батпақты жерлер, су сақтау және басқа түрлерге арналған мекендер қысқарады.</li>
@@ -84,7 +545,7 @@
       </section>
 
       <section id="solutions" class="card">
-        <h2>5. Шешу жолдары</h2>
+        <h2>Шешу жолдары</h2>
         <div class="grid">
           <div>
             <h3>(a) Қорықтар мен табиғи резервті аймақтарды құру</h3>
@@ -94,7 +555,7 @@
             <p class="muted">Кей елдерде құндызды қайта енгізу жобалары табысты жүзеге асуда; бұл популяцияны қалпына келтіруге көмектеседі.</p>
 
             <h3>(c) Адам-жануар қақтығыстарын басқару</h3>
-            <p class="muted">Flow devices (кейде <code>beaver deceivers деп аталады) сияқты техникалар бөгеттерге зиян келтірмей судың деңгейін реттеуге мүмкіндік береді.</p>
+            <p class="muted">Flow devices (кейде <code>beaver deceivers</code> деп аталады) сияқты техникалар бөгеттерге зиян келтірмей судың деңгейін реттеуге мүмкіндік береді.</p>
           </div>
 
           <div>
@@ -113,6 +574,35 @@
       Құндыз туралы ақпаратты қолданғаныңыз үшін рақмет. Бұл бет жіктеу, басып шығару және білім беру материалдарына арналған.
     </footer>
   </div>
+
+  <script>
+    // Scroll progress indicator
+    window.addEventListener('scroll', () => {
+      const scrollProgress = document.getElementById('scrollProgress');
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (window.scrollY / scrollHeight) * 100;
+      scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
+    });
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Add parallax effect to particles
+    window.addEventListener('mousemove', (e) => {
+      const particles = document.querySelectorAll('.particle');
+      particles.forEach((particle, index) => {
+        const speed = (index + 1) * 0.02;
+        const x = (window.innerWidth - e.pageX * speed) / 100;
+        const y = (window.innerHeight - e.pageY * speed) / 100;
+        particle.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+  </script>
 </body>
 </html>
- </code>
